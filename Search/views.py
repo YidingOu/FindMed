@@ -58,6 +58,8 @@ def search(request):
 		drugreferencetable.update({i:name})
 
 	print(drugreferencetable)
+	output = ['{} : {}'.format(key, value) for key, value in drugreferencetable.items()]
+        
 
 
 
@@ -73,4 +75,4 @@ def search(request):
 
 
 
-	return HttpResponse(drugreferencetable)
+	return HttpResponse(output)
