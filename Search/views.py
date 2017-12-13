@@ -7,18 +7,32 @@ from pyquery import PyQuery as pq
 from django.shortcuts import render
 from django.http import HttpResponse
 
+
 # Create your views here.
 
 def index(request):
 	return render(request,'index.html')
 
+def error(request):
+	return render(request, 'error.html')
+
 def search(request):
+
 	a = request.GET.get('a', 0)
+
+	for letter in list(map(chr, range(65, 123))):
+		if letter in a:
+			print(get)
+			return error(request)
+
 
 	url = "http://www.drugfuture.com/cndrug/search.aspx?SearchTerm="+ str(a) +"&DataFieldSelected=auto"
 
 	r = requests.get(url)
 	
+	if r is []:
+		print(r)
+		return error(request)
 	# print(cao)
 	soup = BeautifulSoup(r.text)
 	ingredient = soup.find_all("td")[6].text
