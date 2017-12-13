@@ -44,7 +44,10 @@ def search(request):
 
 			soup2 = BeautifulSoup(r2.text)
 
-			name = [x.text.strip() for x in soup2.find_all('a', href = True, class_="drug-info-link")]
+			name = [x.text for x in soup2.find_all('a', href = True, class_="drug-info-link")]
+			name = [x.replace("\n", '').replace("\t", '').replace("\xa0", ' ') for x in name]
+
+
 			# print(i)
 			# print(name)
 
@@ -57,11 +60,18 @@ def search(request):
 
 		drugreferencetable.update({i:name})
 
-	print(drugreferencetable)
+	# print(drugreferencetable)
 
+	output = ['{}:{}'.format(key,value) for key, value in drugreferencetable.items()]
 
+	rank = []
 
-
+	for k in drugreferencetable:
+	 	for key in drugreferencetable:
+	 		if k != key:
+	 			rank +=list(set(drugreferencetable[k])&set(drugreferencetable[key]))
+		
+	print(rank)
 
 
 
@@ -73,4 +83,4 @@ def search(request):
 
 
 
-	return HttpResponse(drugreferencetable)
+	return render(request, 'search.html', {'output': output})
