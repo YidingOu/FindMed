@@ -60,14 +60,7 @@ def search(request):
 
 		drugreferencetable.update({i:name})
 
-<<<<<<< HEAD
 	# print(drugreferencetable)
-=======
-	print(drugreferencetable)
-	output = ['{} : {}'.format(key, value) for key, value in drugreferencetable.items()]
-        
-
->>>>>>> fd74e81d7076ccfeeeab96a19ad04940293895a8
 
 	output = ['{}:{}'.format(key,value) for key, value in drugreferencetable.items()]
 
@@ -90,8 +83,4 @@ def search(request):
 
 
 
-<<<<<<< HEAD
 	return render(request, 'search.html', {'output': output})
-=======
-	return HttpResponse(output)
->>>>>>> fd74e81d7076ccfeeeab96a19ad04940293895a8
