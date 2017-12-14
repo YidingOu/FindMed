@@ -85,10 +85,11 @@ def search(request):
 
 	return render(request, 'search.html', {'drugreferencetable': drugreferencetable})
 
-def description(request, med_name):
+def description(request, i):
 
-	a = request.GET.get('i', 0)
-	print(med_name)
+	a = request.GET.get('request', 0)
+	print(i)
+	print(request)
 
-	return render(request, 'description.html')
+	return HttpResponse("good")
 
