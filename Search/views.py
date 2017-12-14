@@ -25,17 +25,13 @@ def search(request):
 
 	for letter in list(map(chr, range(65, 123))):
 		if letter in a:
-			print(get)
 			return error(request)
 
 
 	url = "http://www.drugfuture.com/cndrug/search.aspx?SearchTerm="+ str(a) +"&DataFieldSelected=auto"
 
 	r = requests.get(url)
-	
-	if r is []:
-		print(r)
-		return error(request)
+
 	# print(cao)
 	soup = BeautifulSoup(r.text)
 	ingredient = soup.find_all("td")[6].text
@@ -79,13 +75,6 @@ def search(request):
 
 	# print(drugreferencetable)
 
-<<<<<<< HEAD
-	output = ['{}:{}'.format(key,value) for key, value in drugreferencetable.items()]
-	print(output)
-=======
-	# output = ['{}:{}'.format(key,value) for key, value in drugreferencetable.items()]
-
->>>>>>> 69dedad493018f991fa346525136ef307d9943a1
 	rank = []
 
 	for k in drugreferencetable:
@@ -95,17 +84,24 @@ def search(request):
 		
 	print(drugreferencetable)
 
+	if drugreferencetable == {'':[]}:
+		return error(request)
 
+	#return a dictionary without empty list
+	result = {}
+	number = {}
+	i = 'A'
+	for key, l in drugreferencetable.items():
+		if len(l) != 0:
+			result[key] =l
+			number[key] = i
+			i = chr(ord(i)+1)
 
-
+	print(number)
 #use ingredient to find US med
 
 
-
-
-
-
-	return render(request, 'search.html', {'drugreferencetable': drugreferencetable})
+	return render(request, 'search.html', {'drugreferencetable': result, 'number': number})
 
 def description(request, med_name):
 

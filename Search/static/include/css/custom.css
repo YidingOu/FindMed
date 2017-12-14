@@ -6,3 +6,6 @@
 	background-color: #8B0000;
 	border-color: #8B0000;
 }
+#brand.navbar-brand{
+	color: red;
+}
