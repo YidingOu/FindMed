@@ -8,12 +8,14 @@
 <p>Search Result</p>
 
 <table>
-{% for key, value in output.items %}
-	{% for i in value %}
+{% for key, value in drugreferencetable.items %}
 	<tr>
-    	{{ i }}
-    </tr>
-	{% endfor %}
+		
+	<td>{{key}}: </td>
+		{% for i in value %}
+		<td>{{i}}<br/> <a href="/descriptiom/{{i}}"><button type="button">Description</button></a><br/></td>
+		{% endfor %}
+	</tr>
 {% endfor %}
 
 </table>

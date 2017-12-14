@@ -62,7 +62,7 @@ def search(request):
 
 	# print(drugreferencetable)
 
-	output = ['{}:{}'.format(key,value) for key, value in drugreferencetable.items()]
+	# output = ['{}:{}'.format(key,value) for key, value in drugreferencetable.items()]
 
 	rank = []
 
@@ -71,7 +71,7 @@ def search(request):
 	 		if k != key:
 	 			rank +=list(set(drugreferencetable[k])&set(drugreferencetable[key]))
 		
-	print(output)
+	print(drugreferencetable)
 
 
 
@@ -83,4 +83,12 @@ def search(request):
 
 
 
-	return render(request, 'search.html', {'output': output})
+	return render(request, 'search.html', {'drugreferencetable': drugreferencetable})
+
+def description(request, med_name):
+
+	a = request.GET.get('i', 0)
+	print(med_name)
+
+	return render(request, 'description.html')
+
