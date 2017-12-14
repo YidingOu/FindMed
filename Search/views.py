@@ -71,7 +71,7 @@ def search(request):
 	 		if k != key:
 	 			rank +=list(set(drugreferencetable[k])&set(drugreferencetable[key]))
 		
-	print(rank)
+	print(output)
 
 
 
