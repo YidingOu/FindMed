@@ -77,7 +77,7 @@ def search(request):
 	# print(drugreferencetable)
 
 	output = ['{}:{}'.format(key,value) for key, value in drugreferencetable.items()]
-
+	print(output)
 	rank = []
 
 	for k in drugreferencetable:
