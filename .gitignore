@@ -1,0 +1,4 @@
+db.sqlite3
+/Search/*.pyc
+/Search/__pycache__
+.DS_*

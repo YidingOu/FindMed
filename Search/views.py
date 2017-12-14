@@ -7,18 +7,31 @@ from pyquery import PyQuery as pq
 from django.shortcuts import render
 from django.http import HttpResponse
 
+
 # Create your views here.
 
 def index(request):
 	return render(request,'index.html')
 
+def error(request):
+	return render(request, 'error.html')
+
 def search(request):
+
 	a = request.GET.get('a', 0)
+
+	if a == '':
+		return error(request)
+
+	for letter in list(map(chr, range(65, 123))):
+		if letter in a:
+			return error(request)
+
 
 	url = "http://www.drugfuture.com/cndrug/search.aspx?SearchTerm="+ str(a) +"&DataFieldSelected=auto"
 
 	r = requests.get(url)
-	
+
 	# print(cao)
 	soup = BeautifulSoup(r.text)
 	ingredient = soup.find_all("td")[6].text
@@ -62,8 +75,6 @@ def search(request):
 
 	# print(drugreferencetable)
 
-	# output = ['{}:{}'.format(key,value) for key, value in drugreferencetable.items()]
-
 	rank = []
 
 	for k in drugreferencetable:
@@ -73,17 +84,24 @@ def search(request):
 		
 	print(drugreferencetable)
 
+	if drugreferencetable == {'':[]}:
+		return error(request)
 
+	#return a dictionary without empty list
+	result = {}
+	number = {}
+	i = 'A'
+	for key, l in drugreferencetable.items():
+		if len(l) != 0:
+			result[key] =l
+			number[key] = i
+			i = chr(ord(i)+1)
 
-
+	print(number)
 #use ingredient to find US med
 
 
-
-
-
-
-	return render(request, 'search.html', {'drugreferencetable': drugreferencetable})
+	return render(request, 'search.html', {'drugreferencetable': result, 'number': number})
 
 def description(request, i):
 
