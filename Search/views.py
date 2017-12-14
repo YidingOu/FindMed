@@ -20,6 +20,9 @@ def search(request):
 
 	a = request.GET.get('a', 0)
 
+	if a == '':
+		return error(request)
+
 	for letter in list(map(chr, range(65, 123))):
 		if letter in a:
 			print(get)
@@ -76,8 +79,13 @@ def search(request):
 
 	# print(drugreferencetable)
 
+<<<<<<< HEAD
 	output = ['{}:{}'.format(key,value) for key, value in drugreferencetable.items()]
 	print(output)
+=======
+	# output = ['{}:{}'.format(key,value) for key, value in drugreferencetable.items()]
+
+>>>>>>> 69dedad493018f991fa346525136ef307d9943a1
 	rank = []
 
 	for k in drugreferencetable:
@@ -85,7 +93,7 @@ def search(request):
 	 		if k != key:
 	 			rank +=list(set(drugreferencetable[k])&set(drugreferencetable[key]))
 		
-	print(rank)
+	print(drugreferencetable)
 
 
 
@@ -97,4 +105,12 @@ def search(request):
 
 
 
-	return render(request, 'search.html', {'output': output})
+	return render(request, 'search.html', {'drugreferencetable': drugreferencetable})
+
+def description(request, med_name):
+
+	a = request.GET.get('i', 0)
+	print(med_name)
+
+	return render(request, 'description.html')
+

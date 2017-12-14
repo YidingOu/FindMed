@@ -5,11 +5,20 @@
 	<title>FindMed</title>
 </head>
 <body>
-<p>Search</p>
+<p>Search Result</p>
 
-{% for key, value in info_dict.items %}
-    {{ key }}: {{ value }}
+<table>
+{% for key, value in drugreferencetable.items %}
+	<tr>
+		
+	<td>{{key}}: </td>
+		{% for i in value %}
+		<td>{{i}}<br/> <a href="/descriptiom/{{i}}"><button type="button">Description</button></a><br/></td>
+		{% endfor %}
+	</tr>
 {% endfor %}
+
+</table>
 
 </body>
 </html>

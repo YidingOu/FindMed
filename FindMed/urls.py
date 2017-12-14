@@ -23,4 +23,5 @@ urlpatterns = [
 	url(r'^$', Search_views.index, name='index'),
     url(r'^admin/', admin.site.urls),
     url(r'^search/$', Search_views.search, name='search'),
+    url(r'^description/(?P<med_name>[0-9]{4})/$', Search_views.description, name='description'),
 ]

@@ -1,0 +1,8 @@
+.btn{
+	background-color:red;
+	border-color:red;
+}
+.btn-primary:hover{
+	background-color: #8B0000;
+	border-color: #8B0000;
+}
