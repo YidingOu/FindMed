@@ -54,8 +54,8 @@
 	<tr>
 		
 	<td>{{key}}: </td>
-		{% for i in value %}
-		<td>{{i}}<br/> <a href="/description/{{i}}/"><button type="button">Description</button></a><br/></td>
+		{% for i,j in value %}
+		<td>{{i}}<br/> <a href="/description/{{i}}/{{j}}"><button type="button">Description</button></a><a href="/Buy/{{i}}/{{j}}"><button type="button">CVS</button></a><br/></td>
 		{% endfor %}
 	</tr>
 =======
