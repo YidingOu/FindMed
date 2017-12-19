@@ -6,6 +6,9 @@ from bs4 import BeautifulSoup
 from pyquery import PyQuery as pq
 from django.shortcuts import render
 from django.http import HttpResponse
+import hmac, hashlib, base64, datetime, bottlenose
+from django.shortcuts import render_to_response
+from lxml import etree
 
 
 # Create your views here.
@@ -138,8 +141,51 @@ def description(request, j):
 
 def Buy(request, i):
 
-	stri = i.replace(" ", '+')
-	url4 = "https://primenow.amazon.com/search?k="+stri+"&p_95=&merchantId=&ref_=pn_gw_nav_sr_ALL"
+
+
+	ilst = i.split(" ")
+	AWSAccessKeyId = "AKIAJXMST2NF73SKXOIA"
+	secret_key = "q8w2APJZv+yxmZbgl/1jylM1Ql5w+pN+fqT9HTJS"
+	AssociateTag = "loy05-20"
+	Service = "AWSECommerceService"
+	Operation = "ItemSearch"
+	Keywords = str(ilst[0]+' '+ilst[1])
+	# print(Keywords)
+	# print(ilst[1])
+	Timestamp = datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
+	amazon = bottlenose.Amazon(AWSAccessKeyId, secret_key, AssociateTag)
+	# b2 = bytes(Timestamp, 'latin-1')
+	# b1 = bytes(secret_key, 'latin-1')
+	# b3 = bytes(Operation, 'latin-1')
+	# b4 = bytes(Service, 'latin-1')
+
+	# print(Timestamp)
+	# print(type(Timestamp))
+	# print(b1)
+	# print(b2)
+	# print(b3)
+	# print(b4)
+
+
+	# Signature = base64.b64encode(hmac.new(b1, (b2+b3+b4), hashlib.sha256).digest())
+
+	# si = Signature.decode("utf-8")
+
+	# print(si)
+	# urlm = "http://webservices.amazon.com/onca/xml?+Service=AWSECommerceService&Operation=ItemSearch&ResponseGroup=Small&SearchIndex=All&Keywords="+Keywords+"&AWSAccessKeyId="+AWSAccessKeyId+"&AssociateTag="+AssociateTag+"&Timestamp="+Timestamp+"&Signature="+si
+
+
+	# rm = requests.get(urlm)
+
+	response = amazon.ItemSearch(Keywords=Keywords, SearchIndex="All")
+	# print(response)
+
+	# soup4 = BeautifulSoup(response)
+	# outcome = [x.text for x in soup4.find_all('item')]
+	# print(outcome)
+	# response = etree.tostring(response, pretty_print=True)
+
+	return render_to_response('Buy.html', {"response": response})
 
 
 
