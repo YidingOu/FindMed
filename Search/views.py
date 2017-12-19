@@ -7,8 +7,8 @@ from pyquery import PyQuery as pq
 from django.shortcuts import render
 from django.http import HttpResponse
 import hmac, hashlib, base64, datetime, bottlenose
-from django.shortcuts import render_to_response
 from lxml import etree
+from django.shortcuts import render_to_response
 
 
 # Create your views here.
@@ -40,10 +40,10 @@ def search(request):
 	ingredient = soup.find_all("td")[6].text
 	# ingredient = [x.text for x in line]
 
-	print(ingredient)
+	# print(ingredient)
 	
 	ingredientlst = re.split(',| and', ingredient)
-	print(ingredientlst)
+	# print(ingredientlst)
 
 	drugreferencetable = {}
 
@@ -67,7 +67,7 @@ def search(request):
 
 			# link = [x.text for x in soup2.find_all('a', href = True, class_="drug-info-link")["href"]]
 
-			print(link)
+			# print(link)
 
 
 			# print(i)
@@ -91,7 +91,7 @@ def search(request):
 	 		if k != key:
 	 			rank +=list(set(drugreferencetable[k])&set(drugreferencetable[key]))
 		
-	# print(drugreferencetable)
+	print(drugreferencetable)
 
 	if drugreferencetable == {'':[]}:
 		return error(request)
@@ -106,14 +106,14 @@ def search(request):
 			number[key] = i
 			i = chr(ord(i)+1)
 
-	print(number)
-	print(result)
+	# print(number)
+	# print(result)
 #use ingredient to find US med
 
 
 	return render(request, 'search.html', {'drugreferencetable': result, 'number': number})
 
-def description(request, j):
+def description(request, i, j):
 	a = request.GET.get('request', 0)
 	print(j)
 	url3 = "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?" + j
@@ -131,18 +131,9 @@ def description(request, j):
 					paragraphs.append(p.get_text())
 			if paragraphs != []:
 				content[li.a.get_text()] = paragraphs
-	print(content)
+	# print(content)
 	#des = [x.replace("View All SectionsClose All Sections", '').replace("Close", '\n') for x in des]
 	# print(request)
-	 
-
-	return render(request, 'description.html', {'content': content})
-
-
-def Buy(request, i):
-
-
-
 	ilst = i.split(" ")
 	AWSAccessKeyId = "AKIAJXMST2NF73SKXOIA"
 	secret_key = "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"
@@ -180,12 +171,65 @@ def Buy(request, i):
 	response = amazon.ItemSearch(Keywords=Keywords, SearchIndex="All")
 	# print(response)
 
-	# soup4 = BeautifulSoup(response)
-	# outcome = [x.text for x in soup4.find_all('item')]
-	# print(outcome)
+	soup4 = BeautifulSoup(response)
+	outcome = [x.text for x in soup4.find_all("detailpageurl")][0]
+
+	print(outcome)
 	# response = etree.tostring(response, pretty_print=True)
 
-	return render_to_response('Buy.html', {"response": response})
+	 
+
+	return render(request, 'description.html', {'content': content, 'outcome': outcome})
+
+
+# def Buy(request, i):
+
+
+
+# 	ilst = i.split(" ")
+# 	AWSAccessKeyId = "AKIAJXMST2NF73SKXOIA"
+# 	secret_key = "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"
+# 	AssociateTag = "loy05-20"
+# 	Service = "AWSECommerceService"
+# 	Operation = "ItemSearch"
+# 	Keywords = str(ilst[0]+' '+ilst[1])
+# 	# print(Keywords)
+# 	# print(ilst[1])
+# 	Timestamp = datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
+# 	amazon = bottlenose.Amazon(AWSAccessKeyId, secret_key, AssociateTag)
+# 	# b2 = bytes(Timestamp, 'latin-1')
+# 	# b1 = bytes(secret_key, 'latin-1')
+# 	# b3 = bytes(Operation, 'latin-1')
+# 	# b4 = bytes(Service, 'latin-1')
+
+# 	# print(Timestamp)
+# 	# print(type(Timestamp))
+# 	# print(b1)
+# 	# print(b2)
+# 	# print(b3)
+# 	# print(b4)
+
+
+# 	# Signature = base64.b64encode(hmac.new(b1, (b2+b3+b4), hashlib.sha256).digest())
+
+# 	# si = Signature.decode("utf-8")
+
+# 	# print(si)
+# 	# urlm = "http://webservices.amazon.com/onca/xml?+Service=AWSECommerceService&Operation=ItemSearch&ResponseGroup=Small&SearchIndex=All&Keywords="+Keywords+"&AWSAccessKeyId="+AWSAccessKeyId+"&AssociateTag="+AssociateTag+"&Timestamp="+Timestamp+"&Signature="+si
+
+
+# 	# rm = requests.get(urlm)
+
+# 	response = amazon.ItemSearch(Keywords=Keywords, SearchIndex="All")
+# 	# print(response)
+
+# 	soup4 = BeautifulSoup(response)
+# 	outcome = [x.text for x in soup4.find_all("detailpageurl")][0]
+
+# 	print(outcome)
+# 	# response = etree.tostring(response, pretty_print=True)
+
+# 	return render_to_response('Buy.html', {"response": outcome})
 
 
 
