@@ -110,21 +110,31 @@ def search(request):
 
 	return render(request, 'search.html', {'drugreferencetable': result, 'number': number})
 
-def description(request, i, j):
-
+def description(request, j):
 	a = request.GET.get('request', 0)
-	print(i)
 	print(j)
 	url3 = "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?" + j
 	r3 = requests.get(url3)
 
 	soup3 = BeautifulSoup(r3.text)
-	des = [x.text for x in soup3.find_all('div', href = False, class_="drug-label-sections")]
-	des = [x.replace("View All SectionsClose All Sections", '').replace("Close", '\n') for x in des]
-	# print(request)
-	print(des)
 
-	return HttpResponse(des)
+	des = soup3.find('div', href = False, class_="drug-label-sections")
+	content = {}
+	if des is not None:
+		for li in des.find_all('li'):
+			paragraphs = []
+			for p in li.find_all('p'):
+				if p.get_text() != '':
+					paragraphs.append(p.get_text())
+			if paragraphs != []:
+				content[li.a.get_text()] = paragraphs
+	print(content)
+	#des = [x.replace("View All SectionsClose All Sections", '').replace("Close", '\n') for x in des]
+	# print(request)
+	 
+
+	return render(request, 'description.html', {'content': content})
+
 
 def Buy(request, i):
 

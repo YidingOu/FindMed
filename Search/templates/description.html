@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+ <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>FindMed</title>
+{% load static %}
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'include/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'include/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'include/vendor/simple-line-icons/css/simple-line-icons.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'include/css/landing-page.min.css' %}" rel="stylesheet">
+    <link href="{% static 'include/css/custom.css' %}" rel="stylesheet">
+    
+  </head>
+
+
+
+
+    <script src="{% static 'include/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'include/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<body>
+
+        <!-- Navigation -->
+    <nav class="navbar navbar-light bg-light static-top">
+      <div class="container">
+        <a id="brand" class="navbar-brand" href="#">LOY</a>
+        <button onclick="window.history.back()" class="btn btn-primary">Back</button>
+      </div>
+    </nav>
+
+
+<div id="accordion" role="tablist" aria-multiselectable="true">
+{% for key, value in content.items %}
+  <div class="card">
+    <div class="card-header" role="tab" id="heading{{forloop.counter}}">
+      <h5 class="mb-0">
+        <a id="brand" data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}" aria-expanded="false" aria-controls="collapse{{forloop.counter}}">
+          {{key}}
+        </a>
+      </h5>
+    </div>
+
+    <div id="collapse{{forloop.counter}}" class="collapse" role="tabpanel" aria-labelledby="heading{{forloop.counter}}">
+      <div class="card-block">
+        <div class="list-group">
+            {% for i in value %}
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <p class="mb-1">{{i}}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+
+
+
+</body>
+</html>

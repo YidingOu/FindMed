@@ -23,5 +23,5 @@ urlpatterns = [
 	url(r'^$', Search_views.index, name='index'),
     url(r'^admin/', admin.site.urls),
     url(r'^search/$', Search_views.search, name='search'),
-    url(r'^description/(?P<i>.*)/(?P<j>.*)/$', Search_views.description, name='description'),
+    url(r'^description/(?P<j>.*)/$', Search_views.description, name='description'),
 ]

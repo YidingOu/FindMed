@@ -50,15 +50,7 @@
 {% load app_filters%}
 <div id="accordion" role="tablist" aria-multiselectable="true">
 {% for key, value in drugreferencetable.items %}
-<<<<<<< HEAD
-	<tr>
-		
-	<td>{{key}}: </td>
-		{% for i,j in value %}
-		<td>{{i}}<br/> <a href="/description/{{i}}/{{j}}"><button type="button">Description</button></a><a href="/Buy/{{i}}/{{j}}"><button type="button">CVS</button></a><br/></td>
-		{% endfor %}
-	</tr>
-=======
+
   <div class="card">
     <div class="card-header" role="tab" id="heading{{number|get_item:key}}">
       <h5 class="mb-0">
@@ -71,8 +63,8 @@
     <div id="collapse{{number|get_item:key}}" class="collapse" role="tabpanel" aria-labelledby="heading{{number|get_item:key}}">
       <div class="card-block">
         <div class="list-group">
-	    	{% for i in value %}
-	    	<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+	    	{% for i, j in value %}
+	    	<a href="/description/{{j}}" class="list-group-item list-group-item-action flex-column align-items-start">
 	    		<div class="d-flex w-100 justify-content-between">
 	    			<p class="mb-1">{{i}}</p>
 	    		</div>
@@ -82,8 +74,6 @@
       </div>
     </div>
   </div>
-
->>>>>>> 460962fdedd5cc00b02bc64e7d027b9bd94615ec
 {% endfor %}
 </div>
 
